@@ -7,14 +7,69 @@ import {
   Image,
   SafeAreaView,
   TextInput,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import Carousel from "../components/Carousel";
+import Services from "../components/Services";
+import DressItems from "../components/DressItems";
 
 const HomeScreen = () => {
+
+  const products = [
+    {
+      id: "0",
+      image: "https://cdn-icons-png.flaticon.com/128/4643/4643574.png",
+      name: "shirt",
+      quantity: 0,
+      price: 10,
+    },
+    {
+      id: "11",
+      image: "https://cdn-icons-png.flaticon.com/128/892/892458.png",
+      name: "T-shirt",
+      quantity: 0,
+      price: 10,
+    },
+    {
+      id: "12",
+      image: "https://cdn-icons-png.flaticon.com/128/9609/9609161.png",
+      name: "dresses",
+      quantity: 0,
+      price: 10,
+    },
+    {
+      id: "13",
+      image: "https://cdn-icons-png.flaticon.com/128/599/599388.png",
+      name: "jeans",
+      quantity: 0,
+      price: 10,
+    },
+    {
+      id: "14",
+      image: "https://cdn-icons-png.flaticon.com/128/9431/9431166.png",
+      name: "Sweater",
+      quantity: 0,
+      price: 10,
+    },
+    {
+      id: "15",
+      image: "https://cdn-icons-png.flaticon.com/128/3345/3345397.png",
+      name: "shorts",
+      quantity: 0,
+      price: 10,
+    },
+    {
+      id: "16",
+      image: "https://cdn-icons-png.flaticon.com/128/293/293241.png",
+      name: "Sleeveless",
+      quantity: 0,
+      price: 10,
+    },
+  ];
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
     "We are loading your location"
   );
@@ -78,7 +133,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView >
+    <ScrollView style={{backgroundColor:"#F0F0F0",flex:1}}>
       {/* location and userPhoto */}
 
       <View
@@ -133,7 +188,21 @@ const HomeScreen = () => {
       {/* slider box */}
 
       <Carousel/>
-    </SafeAreaView>
+
+      {/* Services */}
+      <Services/>
+
+      {/* Product details */}
+
+        {
+          products.map((product)=>{
+            return (
+              <DressItems key={product.id} {...product}/>
+            )
+          })
+        }
+
+    </ScrollView>
   );
 };
 

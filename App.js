@@ -5,7 +5,7 @@ import HomeScreen from './src/screens/HomeScreen';
 export default function App() {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" translucent={false} backgroundColor='#fff'/>
+      <StatusBar style="auto" translucent={false} backgroundColor="#F0F0F0"/>
       <HomeScreen/>
     </View>
   );
