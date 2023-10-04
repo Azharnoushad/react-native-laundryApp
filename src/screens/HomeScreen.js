@@ -16,8 +16,25 @@ import { FontAwesome } from "@expo/vector-icons";
 import Carousel from "../components/Carousel";
 import Services from "../components/Services";
 import DressItems from "../components/DressItems";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../redux/ProductSlice";
 
 const HomeScreen = () => {
+  const cart = useSelector((state) => state.cart.cart);
+
+
+  const product = useSelector((state) => state.product.product);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (product.length > 0) {
+      return;
+    }
+    const fetchProducts = () => {
+      products.map((product) => dispatch(getProducts(product)));
+    };
+    fetchProducts();
+  }, []);
 
   const products = [
     {
@@ -133,7 +150,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <ScrollView style={{backgroundColor:"#F0F0F0",flex:1}}>
+    <ScrollView style={{ backgroundColor: "#F0F0F0", flex: 1 }}>
       {/* location and userPhoto */}
 
       <View
@@ -141,7 +158,7 @@ const HomeScreen = () => {
           flexDirection: "row",
           alignItems: "center",
           gap: 5,
-          paddingHorizontal: 15
+          paddingHorizontal: 15,
         }}
       >
         <Ionicons name="location-sharp" size={30} color="#fd5c63" />
@@ -168,7 +185,7 @@ const HomeScreen = () => {
           paddingHorizontal: 10,
           paddingVertical: 8,
           marginTop: 15,
-          marginHorizontal:10
+          marginHorizontal: 10,
         }}
       >
         <TextInput
@@ -187,21 +204,16 @@ const HomeScreen = () => {
 
       {/* slider box */}
 
-      <Carousel/>
+      <Carousel />
 
       {/* Services */}
-      <Services/>
+      <Services />
 
       {/* Product details */}
 
-        {
-          products.map((product)=>{
-            return (
-              <DressItems key={product.id} {...product}/>
-            )
-          })
-        }
-
+      {product.map((product) => {
+        return <DressItems key={product.id} {...product} products={product} />;
+      })}
     </ScrollView>
   );
 };
