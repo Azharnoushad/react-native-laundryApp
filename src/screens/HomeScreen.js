@@ -22,6 +22,8 @@ import { getProducts } from "../redux/ProductSlice";
 const HomeScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
 
+ 
+
 
   const product = useSelector((state) => state.product.product);
 

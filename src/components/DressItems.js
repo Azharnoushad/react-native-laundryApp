@@ -1,22 +1,24 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTocart } from "../redux/CartSlice";
+import { addTocart, decrementCount, incrementCount } from "../redux/CartSlice";
 import { AntDesign } from "@expo/vector-icons";
+import {
+  decrementCountProduct,
+  incrementCountProduct,
+} from "../redux/ProductSlice";
 
 const DressItems = ({ id, image, name, quantity, price, products }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart.cart);
-  const productCount = cart.find((item) => item.id === id)?.quantity;
 
   const addToCart = () => {
     dispatch(addTocart(products));
+    dispatch(incrementCountProduct(products));
   };
 
-  const isInCart = (_id) => {
-    return !!cart.find((item) => item.id === _id);
-  };
+  const count = cart.find((item) => item.id === id)?.quantity;
 
   return (
     <View
@@ -51,19 +53,29 @@ const DressItems = ({ id, image, name, quantity, price, products }) => {
         <Text style={{ fontSize: 18, width: 60 }}>${price}</Text>
       </View>
 
-      {isInCart(id) ? (
+      {cart.some((item) => item.id === id) ? (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <Pressable>
+          <Pressable
+            onPress={() => {
+              dispatch(decrementCount(products));
+              dispatch(decrementCountProduct(products));
+            }}
+          >
             <AntDesign name="minuscircleo" size={20} color="black" />
           </Pressable>
           <View>
             <Text
               style={{ color: "#fd5c63", fontSize: 26, fontWeight: "bold" }}
             >
-              {productCount}
+              {count}
             </Text>
           </View>
-          <Pressable>
+          <Pressable
+            onPress={() => {
+              dispatch(incrementCount(products));
+              dispatch(incrementCountProduct(products));
+            }}
+          >
             <AntDesign name="pluscircleo" size={20} color="black" />
           </Pressable>
         </View>
