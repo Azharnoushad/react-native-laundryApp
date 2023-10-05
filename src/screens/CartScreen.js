@@ -23,6 +23,12 @@ const CartScreen = () => {
   const [selectedTime, setSelectedTime] = useState([]);
   const [deliveryTime, setDeliveryTime] = useState([]);
 
+  const day = new Date(selectedDate).getDay()+1
+  const year = new Date(selectedDate).getFullYear()
+  const month = new Date(selectedDate).getMonth()+1
+  const date = `${day}/${year}/${month}`
+
+
   const deliveryTimes = [
     {
       id: "0",
@@ -85,7 +91,7 @@ const CartScreen = () => {
       ]);
     }
     if(selectedDate && selectedTime && deliveryTime){
-      navigation.replace("CartPage")
+      navigation.replace("CartPage",{totalAmount:totalAmount,selectedTime:selectedTime,deliveryTime:deliveryTime,date:date})
     }
   }
   return (
