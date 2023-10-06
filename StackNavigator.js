@@ -5,6 +5,7 @@ import CartScreen from "./src/screens/CartScreen";
 import CartPageScreen from "./src/screens/CartPageScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
+import OrderScreen from "./src/screens/OrderScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ export const StackNavigator = () => {
           component={LoginScreen}
           options={{ headerShown: false }}
         />
-       
+
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -33,9 +34,14 @@ export const StackNavigator = () => {
           component={CartPageScreen}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Register"
           component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Order"
+          component={OrderScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

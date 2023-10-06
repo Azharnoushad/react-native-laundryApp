@@ -6,11 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
+  Alert
 } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 
 const RegisterScreen = () => {
@@ -19,6 +23,30 @@ const RegisterScreen = () => {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [phone,setPhone] = useState("")
+
+    const registerHandler = () => {
+        if(email === "" || password === "" || email === "") {
+            Alert.alert('Invalid details', 'Please provide required field', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]);
+        }
+
+        createUserWithEmailAndPassword(auth,email,password).then((userCredential)=>{
+            console.log(userCredential)
+            const user = userCredential._tokenResponse.email
+            const myUserUid = auth.currentUser.uid
+
+            setDoc(doc(db,"users",`${myUserUid}`),{
+                email:user,
+                phone:phone
+            })
+        })
+    }
   return (
     <SafeAreaView
       style={{
@@ -75,6 +103,7 @@ const RegisterScreen = () => {
        <Ionicons name="key-outline" size={24} color="black" />
         <TextInput
           placeholder="Password"
+          secureTextEntry={true}
           value={password}
           onChangeText={(text)=>setPassword(text)}
           style={{
@@ -111,6 +140,7 @@ const RegisterScreen = () => {
       </View>
 
       <TouchableOpacity
+      onPress={registerHandler}
       activeOpacity={0.8}
         style={{
           backgroundColor: "#115ba0",

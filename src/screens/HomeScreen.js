@@ -35,7 +35,7 @@ const HomeScreen = () => {
     if (product.length > 0) {
       return;
     }
-    const fetchProducts = () => {
+    const fetchProducts = async () => {
       products.map((product) => dispatch(getProducts(product)));
     };
     fetchProducts();

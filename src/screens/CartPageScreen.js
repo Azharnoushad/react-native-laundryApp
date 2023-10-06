@@ -291,6 +291,7 @@ const CartPageScreen = () => {
           </Text>
         </View>
         <Pressable
+        onPress={()=>navigation.navigate("Order")}
           style={{
             backgroundColor: "#307a74",
             paddingHorizontal: 25,
